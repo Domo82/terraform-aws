@@ -1,0 +1,39 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Add repo to Infracost app
+
+# Controls when the workflow will run
+on:
+  # Runs your workflow when a project (classic) is created
+  project:
+    types: [created]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Repo Name
+        id: check_repo_name
+        run: |
+          if [[ ${{ github.repository }} == terraform-* ]]; then
+            echo "Repo name has prefix terraform-"
+            echo "::set-output name=valid_repo::true"
+          else
+            echo "Repo name does not have prefix terraform-"
+            echo "::set-output name=valid_repo::false"
+          fi
+
+      - name: Add repo to Infracost App
+        if: steps.check_repo_name.outputs.valid_repo == 'true'
+        run: |
+            curl -L \
+              -X PUT \
+              -H "Accept: application/vnd.github+json" \
+              -H "Authorization: Bearer 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" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              https://api.github.com/user/installations/51281931/repositories/814186947
+
