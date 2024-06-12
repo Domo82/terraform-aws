@@ -19,7 +19,7 @@ jobs:
       - name: Check Repo Name
         id: check_repo_name
         run: |
-          if [[ ${{ github.repository }} == terraform-* ]]; then
+          if [[ ${{ github.repository }} == Domo82/terraform-* ]]; then
             echo "Repo name has prefix terraform-"
             echo "::set-output name=valid_repo::true"
           else
