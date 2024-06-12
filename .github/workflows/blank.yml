@@ -20,10 +20,10 @@ jobs:
         id: check_repo_name
         run: |
           if [[ ${{ github.repository }} == Domo82/terraform-* ]]; then
-            echo "Repo name has prefix terraform-"
+            echo "Repo name has prefix terraform-, adding repo to Infracost App"
             echo "::set-output name=valid_repo::true"
           else
-            echo "Repo name does not have prefix terraform-"
+            echo "Repo name does not have prefix terraform-, this repo will not be added to the Infracost App"
             echo "::set-output name=valid_repo::false"
           fi
 
@@ -36,4 +36,7 @@ jobs:
               -H "Authorization: Bearer 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" \
               -H "X-GitHub-Api-Version: 2022-11-28" \
               https://api.github.com/user/installations/51281931/repositories/814186947
+              
+      - name: The Job has succeeded
+        if: ${{ success() }}
 
