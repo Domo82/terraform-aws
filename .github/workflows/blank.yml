@@ -35,6 +35,6 @@ jobs:
             curl -L \
               -X PUT \
               -H "Accept: application/vnd.github+json" \
-              -H "Authorization: Bearer ${{ secrets.REPO_PAT }}" \
+              -H "Authorization: Bearer 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" \
               -H "X-GitHub-Api-Version: 2022-11-28" \
               https://api.github.com/user/installations/${{ secrets.INFRACOST_APP_ID }}/repositories/${{ github.event.repository.id }}
