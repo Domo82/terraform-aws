@@ -16,13 +16,8 @@ jobs:
             echo "repo_name=false" >> $GITHUB_OUTPUT
             exit 1
           fi
-                
-  remove_repo:
-    needs: check_repo_existence
-    if: check_repo_existence.steps.check_repo.outputs.repo_name == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Remove repo from Infracost app
+      - name: Remove Repo           
+        if: steps.check_repo.outputs.repo_name == 'true'
         run: |
           curl -L \
           -X DELETE \
