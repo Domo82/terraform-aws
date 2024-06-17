@@ -19,7 +19,7 @@ jobs:
                 
   remove_repo:
     needs: check_repo_existence
-    if: steps.ckeck_repo.outputs.repo_name == 'true'
+    if: steps.check_repo.outputs.repo_name == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Remove repo from Infracost app
