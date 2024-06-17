@@ -7,17 +7,19 @@ jobs:
       - name: Check Repository
         id: check_repo
         run: |
-          repo_name=${{ github.event.inputs.repo_name }}
+          #repo_name=${{ github.event.inputs.repo_name }}
+          repo_name="test-name"
           response=$(curl -s -o /dev/null -w "%{http_code}" https://github.com/$repo_name)
           if [[ $response == "200" ]]; then
-            echo "Repository $repo_name exists."
+            echo "repo_name=true" >> $GITHUB_OUTPUT
           else
-            echo "Repository $repo_name does not exist."
+            echo "repo_name=false" >> $GITHUB_OUTPUT
             exit 1
           fi
                 
   remove_repo:
     needs: check_repo_existence
+    if: steps.ckeck_repo.outputs.repo_name == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Remove repo from Infracost app
