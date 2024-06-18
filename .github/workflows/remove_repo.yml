@@ -5,7 +5,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Remove Repo           
-        if: steps.check_repo.outputs.repo_name == 'false'
         run: |
           curl -L \
           -X DELETE \
