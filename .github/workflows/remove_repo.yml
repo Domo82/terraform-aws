@@ -6,6 +6,7 @@ jobs:
     steps:
       - name: Remove Repo           
         run: |
+          echo ${{ github.repository }}
           curl -L \
           -X DELETE \
           -H "Accept: application/vnd.github+json" \
