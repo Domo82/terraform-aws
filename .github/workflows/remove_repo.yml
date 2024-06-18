@@ -8,8 +8,8 @@ jobs:
         id: check_repo
         run: |
           #repo_name=${{ github.event.inputs.repo_name }}
-          repo_name="test-name"
-          response=$(curl -s -o /dev/null -w "%{http_code}" https://github.com/$repo_name)
+          #repo_name="test-name"
+          response=$(curl -s -o /dev/null -w "%{http_code}" https://github.com/test-name)
           if [[ $response == "200" ]]; then
             echo "repo_name=true" >> $GITHUB_OUTPUT
             echo "Response is $response"
