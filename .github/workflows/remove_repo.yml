@@ -4,20 +4,6 @@ jobs:
   check_repo_existence:
     runs-on: ubuntu-latest
     steps:
-      - name: Check Repository
-        id: check_repo
-        run: |
-          #repo_name=${{ github.event.inputs.repo_name }}
-          #repo_name="test-name"
-          response=$(curl -s -o /dev/null -w "%{http_code}" https://github.com/test-name)
-          if [[ $response == "200" ]]; then
-            echo "repo_name=true" >> $GITHUB_OUTPUT
-            echo "Response is $response"
-          else
-            echo "repo_name=false" >> $GITHUB_OUTPUT
-            echo "Response is $response, removing repo from app"
-            exit 1
-          fi
       - name: Remove Repo           
         if: steps.check_repo.outputs.repo_name == 'false'
         run: |
