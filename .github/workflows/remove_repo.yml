@@ -1,5 +1,5 @@
 name: Remove repo from the Infracost App
-on: [ delete, workflow_dispatch]
+on: [ delete, workflow_dispatch, push]
 jobs:
   check_repo_existence:
     runs-on: ubuntu-latest
