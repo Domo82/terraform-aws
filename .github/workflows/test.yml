@@ -1,0 +1,35 @@
+name: "Create Repo"
+
+# This workflow only runs when the "Use this template" button is clicked
+# As the initial github commit message placed when creating a repo from
+# a template we need to ammend the commit message to comply with conventional commits
+
+on: [create, workflow_dispatch]
+
+jobs:
+  create:
+    if: ${{ !github.event.repository.is_template }}
+    permissions: "write-all"
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: "Check out the repo"
+        uses: "actions/checkout@v3"
+      - name: "remove this action"
+        run: |
+          rm -f "./.github/workflows/repo_init.yml"
+      - name: Add repo to Infracost App
+        run: |
+          curl -L \
+            -X PUT \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer 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" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/user/installations/${{ secrets.INFRACOST_APP_ID }}/repositories/${{ github.event.repository.id }}
+      - name: "Fix initial commit message"
+        uses: "stefanzweifel/git-auto-commit-action@v4"
+        with:
+          commit_message: "fix: Initial Commit"
+          commit_options: "--amend"
+          push_options: "--force"
+          tagging_message: 'v0.0.0'
+          skip_fetch: true
