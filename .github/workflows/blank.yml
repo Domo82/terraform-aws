@@ -3,9 +3,7 @@
 name: Add repo to Infracost app
 
 # Controls when the workflow will run
-on:
-  - workflow_dispatch
-  - create
+on: [create, workflow_dispatch]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
