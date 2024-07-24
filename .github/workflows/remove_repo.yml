@@ -1,18 +1,23 @@
 name: Remove repo from the Infracost App
-on: [ delete, workflow_dispatch, push]
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/5 * * * *"
 jobs:
-  check_repo_existence:
+  check_repository:
     runs-on: ubuntu-latest
     steps:
-      - name: Remove Repo           
+      - name: Is repo archived
         run: |
-          echo "Is this repo a template: ${{ github.event.repository.is_template }}"
-        
+          echo "Is this repo archived: ${{ github.event.repository.archived }}" >> $GITHUB_ENV
+      - name: Remove Repo      
+        if: ${{ github.event.repository.archived == 'true' }} && ${{ github.event.repository.is_template == 'false' }}
+        run: |
+          echo "Removing repo from the Infracost App"
           curl -L \
           -X DELETE \
           -H "Accept: application/vnd.github+json" \
           -H "Authorization: Bearer ${{ secrets.REPO_PAT }}" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
           https://api.github.com/user/installations/${{ secrets.INFRACOST_APP_ID }}/repositories/${{ github.event.repository.id }}
-    
     
