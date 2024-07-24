@@ -25,7 +25,6 @@ jobs:
             #echo "::set-output name=valid_repo::false"
             echo "valid_repo=false" >> $GITHUB_OUTPUT
           fi
-
       - name: Add repo to Infracost App
         if: steps.check_repo_name.outputs.valid_repo == 'true'
         run: |
