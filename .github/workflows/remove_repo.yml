@@ -1,6 +1,5 @@
 name: Remove repo from the Infracost App
 on:
-  workflow_dispatch:
   schedule:
     - cron: "*/5 * * * *"
 jobs:
