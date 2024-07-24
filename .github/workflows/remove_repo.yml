@@ -9,9 +9,15 @@ jobs:
     steps:
       - name: Is repo archived
         run: |
-          echo "Is this repo archived: ${{ github.event.repository.archived }}" >> $GITHUB_ENV
+          if [[ ${{ github.event.repository.archived }} == 'true' ]]; then
+            echo "Repo is archived"
+            echo "archived=true" >> $GITHUB_ENV
+          else
+            echo "Repo is not archived"
+            echo "archived=false" >> $GITHUB_ENV
+          fi
       - name: Remove Repo      
-        if: ${{ github.event.repository.archived == 'true' }} && ${{ github.event.repository.is_template == 'false' }}
+        if: steps.check_repository.outputs.archived == 'true'
         run: |
           echo "Removing repo from the Infracost App"
           curl -L \
