@@ -1,0 +1,9 @@
+tag_prefix = "v"
+ignore_merge_commits = true
+skip_ci = "[ci skip]"
+post_bump_hooks = [
+  "git push origin --tags"
+]
+
+[changelog]
+path = "CHANGELOG.md"
