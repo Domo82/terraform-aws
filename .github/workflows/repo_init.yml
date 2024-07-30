@@ -35,3 +35,20 @@ jobs:
           push_options: "--force"
           tagging_message: 'v0.0.0'
           skip_fetch: true
+      - name: Get Next Version
+        id: next_version
+        run: |
+          echo NEXT_VERSION=`cog bump --auto --dry-run` >> "$GITHUB_ENV"
+      - name: Cocogitto release
+        id: release
+        uses: cocogitto/cocogitto-action@v3.8
+        with:
+          check-latest-tag-only: true
+          release: true
+      - name: Generate Changelog
+        run: cog changelog --at ${{ steps.release.outputs.version }} -t full_hash > GITHUB_CHANGELOG.md
+      - name: Upload github release
+        uses: softprops/action-gh-release@v1
+        with:
+          body_path: GITHUB_CHANGELOG.md
+          tag_name: ${{ steps.release.outputs.version }}
