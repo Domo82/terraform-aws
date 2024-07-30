@@ -20,7 +20,6 @@ jobs:
       - name: Get Next Version
         id: next_version
         run: |
-          git commit --allow-empty -am 'empty commit'
           echo NEXT_VERSION=`cog bump --auto` >> "$GITHUB_ENV"
       - name: Cocogitto release
         id: release
