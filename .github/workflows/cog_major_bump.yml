@@ -1,0 +1,53 @@
+name: Cocogitto major bump test
+on: 
+  workflow_dispatch:
+    inputs:
+      type:
+        description: 'Major bump type'
+        required: true
+        default: 'major'
+        type: choice
+        options: 
+          - major
+          - major-beta
+          - major-rc
+jobs:
+  major:
+    if : github.event.inputs.type == 'major'
+    permissions: write-all
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Bump major version
+        uses: cocogitto/cocogitto-action@v3.8
+      - run: |
+          cog bump --major
+  major-beta:
+    if : github.event.inputs.type == 'major-beta'
+    permissions: write-all
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Bump major version with beta suffix
+        uses: cocogitto/cocogitto-action@v3.8
+      - run: |
+          cog bump --major --pre "beta"
+  major-rc:
+    if : github.event.inputs.type == 'major-rc'
+    permissions: write-all
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Bump major version with rc suffix
+        uses: cocogitto/cocogitto-action@v3.8
+      - run: |
+          cog bump --major --pre "rc"
