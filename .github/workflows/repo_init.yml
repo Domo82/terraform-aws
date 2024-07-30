@@ -39,7 +39,7 @@ jobs:
         id: next_version
         uses: cocogitto/cocogitto-action@v3.8
       - run: |
-          echo NEXT_VERSION=$(cog bump --dry-run --auto) >> "$GITHUB_ENV"
+          echo cog bump --minor
       - name: Cocogitto release
         id: release
         uses: cocogitto/cocogitto-action@v3.8
