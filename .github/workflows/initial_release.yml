@@ -20,7 +20,7 @@ jobs:
       - name: Get Next Version
         id: next_version
         run: |
-          echo NEXT_VERSION=`cog bump --auto` >> "$GITHUB_ENV"
+          echo NEXT_VERSION=$(cog bump --dry-run --auto) >> "$GITHUB_ENV"
       - name: Cocogitto release
         id: release
         uses: cocogitto/cocogitto-action@v3.8
