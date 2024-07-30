@@ -39,7 +39,7 @@ jobs:
         id: next_version
         uses: cocogitto/cocogitto-action@v3.8
       - run: |
-          echo cog commit feat: "Initial Release"
+          echo git commit --allow-empty -am 'fix: Initial Release'
           echo NEXT_VERSION=`cog bump --auto` >> "$GITHUB_ENV"
       - name: Cocogitto release
         id: release
