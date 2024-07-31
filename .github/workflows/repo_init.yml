@@ -5,7 +5,7 @@ name: "Create Repo"
 # a template we need to ammend the commit message to comply with conventional commits
 
 on:
-  - push
+  - create
   - workflow_dispatch
 
 jobs:
