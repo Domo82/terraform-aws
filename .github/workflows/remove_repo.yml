@@ -9,6 +9,9 @@ jobs:
       REPO_ID: ${{ github.event.repository.id }}
       APP_ID: ${{ secrets.INFRACOST_APP_ID }}
     steps:
+      - name: Enable debug logging
+        run: |
+            echo "ACTIONS_RUNNER_DEBUG=true" >> $GITHUB_ENV
       - name: List org repos
         run: |
           curl -L \
