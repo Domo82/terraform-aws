@@ -12,6 +12,7 @@ jobs:
       - name: Enable debug logging
         run: |
             echo "ACTIONS_RUNNER_DEBUG=true" >> $GITHUB_ENV
+            echo "ACTIONS_STEP_DEBUG=true" >> $GITHUB_ENV
       - name: List org repos
         run: |
           curl -L \
