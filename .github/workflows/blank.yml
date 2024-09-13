@@ -13,7 +13,7 @@ jobs:
       REPO_ID: ${{ github.event.repository.id }}
       APP_ID: ${{ secrets.INFRACOST_APP_ID }}
       PAT: ${{ secrets.REPO_PAT }}
-      FINE_GRAIN_PAT: ${{ secrets.FINE_GRAIN_PAT }}
+      FINE_GRAIN_PAT: ${{ secrets.FINE_GRAINED_PAT }}
     steps:
       - name: Add repo to Infracost App
         run: |
