@@ -25,5 +25,5 @@ jobs:
               https://api.github.com/user/installations/${{ env.APP_ID }}/repositories/${{ github.event.repository.id }}
       - name: Create branch protection rules
         run: |
-          echo ${{ github.event.repository.name}}
-          echo ${{ github.event.repository.organization}}
+          echo 'repo = ${{ github.event.repository.name}}'
+          echo 'org = ${{ github.event.repository.organization}}'
