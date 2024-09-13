@@ -26,4 +26,4 @@ jobs:
       - name: Create branch protection rules
         run: |
           echo 'repo = ${{ github.event.repository.name}}'
-          echo 'org = ${{ github.event.repository_owner}}'
+          echo 'org = ${{ github.repository_owner}}'
