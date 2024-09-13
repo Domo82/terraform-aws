@@ -25,16 +25,5 @@ jobs:
               https://api.github.com/user/installations/${{ env.APP_ID }}/repositories/${{ github.event.repository.id }}
       - name: Create branch protection rules
         run: |
-            curl -L \
-                -X PUT \
-                -H 'Accept: application/vnd.github+json' \
-                -H 'Authorization: Bearer ${{ env.FINE_GRAINED_PAT }}' \
-                -H 'X-GitHub-Api-Version: 2022-11-28' \
-                https://api.github.com/repos/Domo82/terraform-aws/branches/main/protection \
-                -d '{
-                    "required_status_checks":{"strict":false,"contexts":[]},
-                    "enforce_admins":true,
-                    "required_pull_request_reviews":{"required_approving_review_count":1},
-                    "restrictions":{"users":[],"teams":[]},
-                    "required_linear_history": false
-                }'
+          echo ${{ github.event.repository.full_name}}
+          echo ${{ github.event.repository.organization}}
