@@ -14,7 +14,7 @@ jobs:
           fetch-depth: 0
           fetch-tags: true
       - name: Check for conventional commit
-        uses: cocogitto/cocogitto-action@v3.8
+        uses: cocogitto/cocogitto-action@v3.9
         with:
           check-latest-tag-only: true
       - name: Get Next Version
@@ -23,7 +23,7 @@ jobs:
           echo git commit --allow-empty -m "fix: Initial Release Commit"
       - name: Cocogitto release
         id: release
-        uses: cocogitto/cocogitto-action@v3.8
+        uses: cocogitto/cocogitto-action@v3.9
         with:
           check-latest-tag-only: true
           release: true
