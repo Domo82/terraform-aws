@@ -58,4 +58,4 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           body_path: CHANGELOG.md
-          tag_name: ${{ steps.release.outputs.version }}
+          tag_name: ${{ steps.release.next_version.version }}
