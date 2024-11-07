@@ -38,11 +38,6 @@ jobs:
         id: next_version
         run: |
           echo NEXT_VERSION=`cog bump --auto --dry-run` >> "$GITHUB_ENV"
-
-      - name: Create Release
-        id: release
-        run: |
-          cog bump --auto
           
       - name: Generate a changelog
         uses: orhun/git-cliff-action@v4
@@ -53,9 +48,12 @@ jobs:
         env:
           OUTPUT: CHANGELOG.md
           GITHUB_REPO: ${{ github.repository }}
-          
-      - name: Upload github release
-        uses: softprops/action-gh-release@v1
+
+      - name: Create a GitHub release
+        id: release
+        uses: ncipollo/release-action@v1
         with:
-          body_path: CHANGELOG.md
-          tag_name: ${{ steps.release.next_version.version }}
+          tag: ${{ steps.next_version.outputs.NEXT_VERSION }}
+          name: Release ${{ steps.tag_version.outputs.new_tag }}
+          body: ${{ steps.git-cliff.outputs.content }}  
+          
