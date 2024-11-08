@@ -35,10 +35,10 @@ jobs:
             rm -rf "cocogitto-$LATEST_COMMIT_SHA" cocogitto.zip
 
       - name: Get Next Version
-        id: next_version
+        id: var
         run: |
-          #echo NEXT_VERSION=`cog bump --auto --dry-run` >> "$GITHUB_ENV"
-          echo "version=$version" >> $GITHUB_OUTPUT
+          echo next_version=`cog bump --auto --dry-run` >> "$GITHUB_OUTPUT"
+          #echo "version=$version" >> $GITHUB_OUTPUT
           
       - name: Generate a changelog
         uses: orhun/git-cliff-action@v4
@@ -54,7 +54,7 @@ jobs:
         id: release
         uses: ncipollo/release-action@v1
         with:
-          tag: ${{ steps.next_version.outputs.version }}
-          name: Release ${{ steps.next_version.outputs.version }}
+          tag: ${{ steps.var.outputs.next_version }}
+          name: Release ${{ steps.var.outputs.next_version }}
           body: ${{ steps.git-cliff.outputs.content }}  
           
