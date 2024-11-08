@@ -24,6 +24,7 @@ jobs:
                 ${{ runner.os }}-cog
                     
       - name: Set up JQ
+        id: install_jq
         run: sudo apt-get install jq
         
       - name: Download and install Cocogitto
