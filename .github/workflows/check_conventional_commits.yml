@@ -1,0 +1,40 @@
+name: Check comments follow conventional commit
+on: [pull_request, push]
+
+jobs:
+  check_conventional_commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Shallow clones should be disabled so we can bump on previous tags
+          fetch-tags: true # This should negate the need for fetch-depth 0 but it seems both are required
+
+      - name: Set up cache for cog binary
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: /usr/local/bin/cog
+          key: ${{ runner.os }}-cog-${{ hashFiles('**/bin/cog') }}
+          restore-keys: |
+              ${{ runner.os }}-cog
+        
+      - name: Set up JQ
+        run: sudo apt-get install jq
+        
+      - name: Download and install Cocogitto from the latest commit
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+            REPO="cocogitto/cocogitto"
+            LATEST_COMMIT_SHA=$(curl -s https://api.github.com/repos/$REPO/commits | jq -r '.[0].sha')
+            curl -L "https://github.com/$REPO/archive/$LATEST_COMMIT_SHA.zip" -o cocogitto.zip
+            unzip cocogitto.zip
+            cd "cocogitto-$LATEST_COMMIT_SHA"
+            cargo build --release
+            sudo mv target/release/cog /usr/local/bin/
+            cd ..
+            rm -rf "cocogitto-$LATEST_COMMIT_SHA" cocogitto.zip
+
+      - name: Check for conventional commit
+        run: cog check --from-latest-tag
