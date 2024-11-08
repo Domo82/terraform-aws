@@ -19,15 +19,6 @@ jobs:
         with:
           check-latest-tag-only: true
 
-      - name: find cog
-        run: which cog
-
-      - name: Cache Dependencies
-        uses: actions/cache@v4
-        with:
-            path: /home/runner/work/terraform-aws/terraform-aws
-            key: /home/runner/.local/bin /home/runner/work/terraform-aws/terraform-aws/
-
       - name: Set up JQ
         run: sudo apt-get install jq
         
