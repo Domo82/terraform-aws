@@ -23,8 +23,15 @@ jobs:
         run: sudo apt-get install jq
 
       - name: find cog
-        run: which cog
+        id: path
+        run: echo cog_path=`which cog` >> "$GITHUB_OUTPUT"
 
+      - name: Cache Dependencies
+        uses: actions/cach@v4
+        with:
+          path: ${{ steps.path.output.cog_path }}
+          key: cocogitto-binary-${{ hashFiles(steps.path.output.cog_path) }}
+        
       - name: Download and install Cocogitto
         run: |
             REPO="cocogitto/cocogitto"
@@ -41,7 +48,6 @@ jobs:
         id: var
         run: |
           echo next_version=`cog bump --auto --dry-run` >> "$GITHUB_OUTPUT"
-          #echo "version=$version" >> $GITHUB_OUTPUT
           
       - name: Generate a changelog
         uses: orhun/git-cliff-action@v4
