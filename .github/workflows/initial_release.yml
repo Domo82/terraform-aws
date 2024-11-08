@@ -18,9 +18,6 @@ jobs:
         uses: cocogitto/cocogitto-action@v3.9
         with:
           check-latest-tag-only: true
-          
-      - name: Set up JQ
-        run: sudo apt-get install jq
 
       - name: find cog
         run: which cog
@@ -32,6 +29,9 @@ jobs:
             key: /home/runner/.local/bin
             restore-keys: |
                 /home/runner/.local/bin
+
+      - name: Set up JQ
+        run: sudo apt-get install jq
         
       - name: Download and install Cocogitto
         run: |
