@@ -15,6 +15,7 @@ jobs:
           fetch-tags: true
 
       - name: Set up cache for cog binary
+        id: cache
         uses: actions/cache@v4
         with:
             path: /usr/local/bin/cog
@@ -26,6 +27,7 @@ jobs:
         run: sudo apt-get install jq
         
       - name: Download and install Cocogitto
+        if: steps.cache.outputs.cache-hit != 'true'
         run: |
             REPO="cocogitto/cocogitto"
             LATEST_COMMIT_SHA=$(curl -s https://api.github.com/repos/$REPO/commits | jq -r '.[0].sha')
