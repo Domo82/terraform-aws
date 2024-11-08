@@ -15,9 +15,7 @@ jobs:
           fetch-tags: true
           
       - name: Check for conventional commit
-        uses: cocogitto/cocogitto-action@v3.9
-        with:
-          check-latest-tag-only: true
+        run: cog check --from-latest-tag
 
       - name: Set up JQ
         run: sudo apt-get install jq
