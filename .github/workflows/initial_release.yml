@@ -1,4 +1,4 @@
-name: Create Initial Cocogitto Release!!
+name: Create Initial Cocogitto Release
 on:
   - workflow_dispatch
 jobs:
@@ -14,7 +14,7 @@ jobs:
           fetch-depth: 0
           fetch-tags: true
 
-      - name: Set up cache
+      - name: Set up cache for cog binary
         uses: actions/cache@v4
         with:
             path: /usr/local/bin/cog
