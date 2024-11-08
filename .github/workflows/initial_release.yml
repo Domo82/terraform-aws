@@ -25,10 +25,8 @@ jobs:
       - name: Cache Dependencies
         uses: actions/cache@v4
         with:
-            path: bin
-            key: /home/runner/.local/bin
-            restore-keys: |
-                /home/runner/.local/bin
+            path: /home/runner/work/terraform-aws/terraform-aws
+            key: /home/runner/.local/bin /home/runner/work/terraform-aws/terraform-aws/
 
       - name: Set up JQ
         run: sudo apt-get install jq
