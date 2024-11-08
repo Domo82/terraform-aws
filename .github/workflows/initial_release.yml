@@ -37,7 +37,8 @@ jobs:
       - name: Get Next Version
         id: next_version
         run: |
-          echo NEXT_VERSION=`cog bump --auto --dry-run` >> "$GITHUB_ENV"
+          #echo NEXT_VERSION=`cog bump --auto --dry-run` >> "$GITHUB_ENV"
+          echo "version=$version" >> $GITHUB_OUTPUT
           
       - name: Generate a changelog
         uses: orhun/git-cliff-action@v4
