@@ -13,9 +13,6 @@ jobs:
         with:
           fetch-depth: 0
           fetch-tags: true
-          
-      - name: Check for conventional commit
-        run: cog check --from-latest-tag
 
       - name: Set up JQ
         run: sudo apt-get install jq
@@ -31,6 +28,9 @@ jobs:
             sudo mv target/release/cog /usr/local/bin/
             cd ..
             rm -rf "cocogitto-$LATEST_COMMIT_SHA" cocogitto.zip
+
+      - name: Check for conventional commit
+        run: cog check --from-latest-tag
 
       - name: Get Next Version
         id: var
