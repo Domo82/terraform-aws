@@ -30,6 +30,7 @@ jobs:
             rm -rf "cocogitto-$LATEST_COMMIT_SHA" cocogitto.zip
 
       - name: Check for conventional commit
+        id: test_id
         run: cog check --from-latest-tag
 
       - name: Get Next Version
