@@ -55,6 +55,6 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ steps.next_version.outputs.version }}
-          name: Release ${{ steps.tag_version.outputs.new_tag }}
+          name: Release ${{ steps.next_version.outputs.version }}
           body: ${{ steps.git-cliff.outputs.content }}  
           
