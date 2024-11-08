@@ -17,10 +17,10 @@ jobs:
       - name: Set up cache for cocogitto binary
         uses: actions/cache@v4
         with:
-            path: /usr/local/bin
-            key: ${{ runner.os }}-cog-${{ hashFiles('**/bin') }}
+            path: /usr/local/bin/cog
+            key: ${{ runner.os }}-cog-${{ hashFiles('**/bin/cog') }}
             restore-keys: |
-                ${{ runner.os }}-cog-
+                ${{ runner.os }}-cog
                     
       - name: Set up JQ
         run: sudo apt-get install jq
