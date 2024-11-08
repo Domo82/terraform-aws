@@ -14,10 +14,6 @@ jobs:
           fetch-depth: 0
           fetch-tags: true
 
-      - name: Cog Location
-        run: which cog
-        continue-on-error: true
-
       - name: Set up cache for cog binary
         id: cache
         uses: actions/cache@v4
@@ -43,6 +39,10 @@ jobs:
             sudo mv target/release/cog /usr/local/bin/
             cd ..
             rm -rf "cocogitto-$LATEST_COMMIT_SHA" cocogitto.zip
+
+      - name: Cog Location
+        run: which cog
+        continue-on-error: true
 
       - name: Check for conventional commit
         id: test_id
