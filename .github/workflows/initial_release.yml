@@ -17,8 +17,8 @@ jobs:
       - name: Set up cache
         uses: actions/cache@v4
         with:
-            path: bin/cog
-            key: ${{ runner.os }}-cog-${{ hashFiles('**/bin/cog') }}
+            path: /usr/local/bin
+            key: ${{ runner.os }}-cog-${{ hashFiles('**/bin') }}
             restore-keys: |
                 ${{ runner.os }}-cog-
                     
