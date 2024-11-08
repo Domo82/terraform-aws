@@ -22,6 +22,9 @@ jobs:
       - name: Set up JQ
         run: sudo apt-get install jq
 
+      - name: find cog
+        run: echo where cog
+
       - name: Download and install Cocogitto
         run: |
             REPO="cocogitto/cocogitto"
