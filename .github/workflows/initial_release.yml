@@ -35,7 +35,7 @@ jobs:
         
       - name: Download and install Cocogitto
         run: |
-            REPO="cocogitto/cocogitto"å
+            REPO="cocogitto/cocogitto"
             LATEST_COMMIT_SHA=$(curl -s https://api.github.com/repos/$REPO/commits | jq -r '.[0].sha')
             curl -L "https://github.com/$REPO/archive/$LATEST_COMMIT_SHA.zip" -o cocogitto.zip
             unzip cocogitto.zip
