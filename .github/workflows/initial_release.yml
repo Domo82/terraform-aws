@@ -23,7 +23,7 @@ jobs:
         run: sudo apt-get install jq
 
       - name: find cog
-        run: where cog
+        run: which cog
 
       - name: Download and install Cocogitto
         run: |
