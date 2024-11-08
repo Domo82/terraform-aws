@@ -1,4 +1,4 @@
-name: Create Initial Cocogitto Release
+name: Create Initial Cocogitto Release!!
 on:
   - workflow_dispatch
 jobs:
