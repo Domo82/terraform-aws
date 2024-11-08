@@ -30,7 +30,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ steps.path.output.cog_path }}
-          key: cocogitto-binary-${{ hashFiles(steps.path.output.cog_path) }}
+          key: cocogitto-binary-${{ hashFiles(steps.path.outputs.cog_path) }}
         
       - name: Download and install Cocogitto
         run: |
