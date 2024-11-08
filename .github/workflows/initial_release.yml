@@ -27,7 +27,7 @@ jobs:
         run: echo cog_path=`which cog` >> "$GITHUB_OUTPUT"
 
       - name: Cache Dependencies
-        uses: actions/cach@v4
+        uses: actions/cache@v4
         with:
           path: ${{ steps.path.output.cog_path }}
           key: cocogitto-binary-${{ hashFiles(steps.path.output.cog_path) }}
