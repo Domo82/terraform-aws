@@ -66,7 +66,7 @@ jobs:
           
       - name: Get Next Version
         id: var
-      - run: |
+        run: |
           echo next_version=`cog bump --auto --dry-run` >> "$GITHUB_OUTPUT"
           
       - name: Generate a changelog
