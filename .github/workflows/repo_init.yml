@@ -64,14 +64,19 @@ jobs:
           tagging_message: 'v0.0.0'
           skip_fetch: true
           
-      - name: Get Next Version
-        id: var
+      - name: Create Empty Git Commit 
+        id: empty_git_commit
         run: |
           git config --global user.email "you@example.com"
           git config --global user.name "Your Name"
           echo next_version=`git commit --allow-empty -m "fix: Initial Release Commit"` >> "$GITHUB_OUTPUT"
           git commit --allow-empty -m "fix: Initial Release Commit"
           
+      - name: Get Next Version
+        id: var
+        run: |
+          echo next_version=`cog bump --auto --dry-run` >> "$GITHUB_OUTPUT"
+
       - name: Generate a changelog
         uses: orhun/git-cliff-action@v4
         id: git-cliff
