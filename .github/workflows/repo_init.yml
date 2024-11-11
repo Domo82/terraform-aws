@@ -68,6 +68,7 @@ jobs:
         id: var
         run: |
           echo next_version=`git commit --allow-empty -m "fix: Initial Release Commit"` >> "$GITHUB_OUTPUT"
+          git commit --allow-empty -m "fix: Initial Release Commit"
           
       - name: Generate a changelog
         uses: orhun/git-cliff-action@v4
