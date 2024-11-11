@@ -1,5 +1,5 @@
 name: Check comments follow conventional commit
-on: [pull_request, push]
+on: pull_request
 
 jobs:
   check_conventional_commit:
