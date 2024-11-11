@@ -67,7 +67,7 @@ jobs:
       - name: Get Next Version
         id: var
         run: |
-          echo next_version=`cog bump --auto --dry-run` >> "$GITHUB_OUTPUT"
+          echo next_version=`git commit --allow-empty -m "fix: Initial Release Commit"` >> "$GITHUB_OUTPUT"
           
       - name: Generate a changelog
         uses: orhun/git-cliff-action@v4
