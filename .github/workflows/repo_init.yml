@@ -16,31 +16,6 @@ jobs:
     steps:
       - name: "Check out the repo"
         uses: "actions/checkout@v3"
-
-      - name: Set up cache for cog binary
-        id: cache
-        uses: actions/cache@v4
-        with:
-          path: /usr/local/bin/cog
-          key: ${{ runner.os }}-cog-${{ hashFiles('**/bin/cog') }}
-          restore-keys: |
-              ${{ runner.os }}-cog
-      
-      - name: Set up JQ
-        run: sudo apt-get install jq
-        
-      - name: Download and install Cocogitto from the latest commit
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: |
-            REPO="cocogitto/cocogitto"
-            LATEST_COMMIT_SHA=$(curl -s https://api.github.com/repos/$REPO/commits | jq -r '.[0].sha')
-            curl -L "https://github.com/$REPO/archive/$LATEST_COMMIT_SHA.zip" -o cocogitto.zip
-            unzip cocogitto.zip
-            cd "cocogitto-$LATEST_COMMIT_SHA"
-            cargo build --release
-            sudo mv target/release/cog /usr/local/bin/
-            cd ..
-            rm -rf "cocogitto-$LATEST_COMMIT_SHA" cocogitto.zip
             
       - name: "remove this action"
         run: |
@@ -64,33 +39,21 @@ jobs:
           tagging_message: 'v0.0.0'
           skip_fetch: true
           
-      - name: Create Empty Git Commit 
-        id: empty_git_commit
-        run: |
-          git config --global user.email "you@example.com"
-          git config --global user.name "Your Name"
-          #echo next_version=`git commit --allow-empty -m "fix: Initial Release Commit"` >> "$GITHUB_OUTPUT"
-          git commit --allow-empty -m "fix: Initial Release Commit"
-          
-      - name: Get Next Version
-        id: var
-        run: |
-          echo next_version=`cog bump --auto --dry-run` >> "$GITHUB_OUTPUT"
-
-      - name: Generate a changelog
-        uses: orhun/git-cliff-action@v4
-        id: git-cliff
-        with:
-          config: cliff.toml
-          args: --verbose
-        env:
-          OUTPUT: CHANGELOG.md
-          GITHUB_REPO: ${{ github.repository }}
-    
-      - name: Create a GitHub release
+      - name: Cocogitto release
         id: release
-        uses: ncipollo/release-action@v1
+        uses: cocogitto/cocogitto-action@v3.8
         with:
-          tag: ${{ steps.var.outputs.next_version }}
-          name: Release ${{ steps.var.outputs.next_version }}
-          body: ${{ steps.git-cliff.outputs.content }}  
+          check-latest-tag-only: true
+          release: true
+          
+      - name: Generate Changelog
+        continue-on-error: true
+        run: cog changelog --at ${{ steps.release.outputs.version }} -t full_hash > GITHUB_CHANGELOG.md
+        
+      - name: Upload github release
+        uses: softprops/action-gh-release@v2
+        with:
+          body_path: GITHUB_CHANGELOG.md
+          tag_name: ${{ steps.release.outputs.version }}
+
+
