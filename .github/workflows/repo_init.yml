@@ -37,7 +37,7 @@ jobs:
           skip_fetch: true
       - name: Get Next Version
         id: next_version
-      - run: |
+        run: |
           git commit --allow-empty -m "fix: Initial Release Commit"
           
       - name: Cocogitto release
