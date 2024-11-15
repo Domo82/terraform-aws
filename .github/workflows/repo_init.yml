@@ -44,9 +44,6 @@ jobs:
       - run: |
           git commit --allow-empty -m "fix: Initial Release Commit"
           
-      - name: Generate a changelog
-      - name: Cocogitto release
-          
       - name: Cocogitto release
         id: release
         uses: cocogitto/cocogitto-action@v3.8
