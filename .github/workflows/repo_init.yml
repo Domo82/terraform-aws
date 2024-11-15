@@ -38,6 +38,14 @@ jobs:
           push_options: "--force"
           tagging_message: 'v0.0.0'
           skip_fetch: true
+
+      - name: Get Next Version
+        id: empty_commit
+      - run: |
+          git commit --allow-empty -m "fix: Initial Release Commit"
+          
+      - name: Generate a changelog
+      - name: Cocogitto release
           
       - name: Cocogitto release
         id: release
