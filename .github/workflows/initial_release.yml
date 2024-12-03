@@ -19,7 +19,7 @@ jobs:
         id: check_file
         run: |
             if [ -f "./.github/workflows/repo_init.yml" ]; then
-                echo "File exists"
+                echo ".github/workflows/repo_init.yml file has not completed, exiting this workflow"
                 exit 1
             fi
             
