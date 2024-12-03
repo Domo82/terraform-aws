@@ -18,7 +18,7 @@ jobs:
       - name: Check if file exists
         id: check_file
         run: |
-            if [ -f "repo_init.yml" ]; then
+            if [ -f "./.github/workflows/repo_init.yml" ]; then
                 echo "File exists"
                 exit 1
             fi
