@@ -1,5 +1,6 @@
 name: Create Initial Cocogitto Release
 on:
+  - push
   - workflow_dispatch
 jobs:
   release:
@@ -8,6 +9,19 @@ jobs:
     permissions:
       contents: write
     steps:
+      - name: Check if init file exists
+        id: check_file
+        run: |
+          if [ -f "**/repo_init.yml" ]; then
+              echo "File repo_init.yml exists, no need to run the release steps."
+              exit 1
+          else
+              echo "File repo_init.yml does not exist."
+          
+      - name: Run CI
+        if: steps.check_file.outcome != 'failure'
+        run: echo "Running CI tasks..."
+        
       - name: Checkout Repo
         uses: actions/checkout@v3
         with:
