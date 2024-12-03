@@ -55,3 +55,6 @@ jobs:
         with:
           body_path: GITHUB_CHANGELOG.md
           tag_name: ${{ steps.release.outputs.version }}
+      - name: "remove this action"
+        run: |
+          rm -f "./.github/workflows/repo_init.yml"
