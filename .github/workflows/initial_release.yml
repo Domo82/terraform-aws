@@ -9,6 +9,12 @@ jobs:
     permissions:
       contents: write
     steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+          
       - name: Check if file exists
         id: check_file
         run: |
@@ -16,50 +22,15 @@ jobs:
                 echo "File exists"
                 exit 1
             fi
-
+            
       - name: Run CI
         if: steps.check_file.outcome != 'failure'
         run: echo "Running CI tasks"
         
-      - name: Checkout Repo
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          fetch-tags: true
-
-      - name: Set up cache for cog binary
-        id: cache
-        uses: actions/cache@v4
-        with:
-            path: /usr/local/bin/cog
-            key: ${{ runner.os }}-cog-${{ hashFiles('**/bin/cog') }}
-            restore-keys: |
-                ${{ runner.os }}-cog
-                    
-      - name: Set up JQ
-        id: install_jq
-        run: sudo apt-get install jq
-        
-      - name: Download and install Cocogitto
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: |
-            REPO="cocogitto/cocogitto"
-            LATEST_COMMIT_SHA=$(curl -s https://api.github.com/repos/$REPO/commits | jq -r '.[0].sha')
-            curl -L "https://github.com/$REPO/archive/$LATEST_COMMIT_SHA.zip" -o cocogitto.zip
-            unzip cocogitto.zip
-            cd "cocogitto-$LATEST_COMMIT_SHA"
-            cargo build --release
-            sudo mv target/release/cog /usr/local/bin/
-            cd ..
-            rm -rf "cocogitto-$LATEST_COMMIT_SHA" cocogitto.zip
-
-      - name: Cog Location
-        run: which cog
-        continue-on-error: true
-
       - name: Check for conventional commit
-        id: test_id
-        run: cog check --from-latest-tag
+        uses: cocogitto/cocogitto-action@v3
+        with:
+          check-latest-tag-only: true
 
       - name: Get Next Version
         id: var
