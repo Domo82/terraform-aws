@@ -47,10 +47,6 @@ jobs:
         with:
           check-latest-tag-only: true
           release: true
-      - name: Bump version
-        uses: cocogitto/cocogitto-action@v3
-      - run: |
-          cog bump --auto
       - name: Generate Changelog
         continue-on-error: true
         run: cog changelog --at ${{ steps.release.outputs.version }} -t full_hash > GITHUB_CHANGELOG.md
