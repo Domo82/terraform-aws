@@ -14,3 +14,6 @@ jobs:
       - name: "Repo Name 1"
         run: |
           echo ${{github.repository}}
+      - name: "Repo Name 2"
+        run: |
+          echo ${{github.event.repository.name}}
